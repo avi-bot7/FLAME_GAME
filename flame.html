@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Explore your love!</title>
+    <link rel="icon" type="image/jpg" href="heart2 .jpg">
+    <style>
+        body {
+            text-align: center;
+            font-family: Comic Sans MS;
+            background-color: #ffe6e6;
+            padding-top: 50px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        #sub {
+            cursor: pointer;
+        }
+
+        #circle {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #ff4d4d;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>EXPLORE YOUR LOVE...</h1>
+    <h4>FIND YOUR SOUL MATE...</h4>
+
+    <input type="text" placeholder="FIRST NAME :" id="name1"><br>
+    <input type="text" placeholder="SECOND NAME :" id="name2"><br>
+    <input type="button" value="SUBMIT" id="sub" onclick="calculateFlames()"><br>
+
+    <p>Tip: Try not to use surnames!</p>
+
+    <div id="circle"></div>
+
+    <script>
+        function calculateFlames() {
+            let name1 = document.getElementById('name1').value.toLowerCase().replace(/\s+/g, '');
+            let name2 = document.getElementById('name2').value.toLowerCase().replace(/\s+/g, '');
+
+            if (!name1 || !name2) {
+                alert("Please enter both names!");
+                return;
+            }
+
+            let arr1 = name1.split('');
+            let arr2 = name2.split('');
+
+            // Remove common letters
+            for (let i = 0; i < arr1.length; i++) {
+                let index = arr2.indexOf(arr1[i]);
+                if (index !== -1) {
+                    arr1.splice(i, 1);
+                    arr2.splice(index, 1);
+                    i--;
+                }
+            }
+
+            let count = arr1.length + arr2.length;
+            let flames = ['F', 'L', 'A', 'M', 'E', 'S'];
+            let index = 0;
+
+            while (flames.length > 1) {
+                index = (index + count - 1) % flames.length;
+                flames.splice(index, 1);
+            }
+
+            let result;
+            switch (flames[0]) {
+                case 'F': result = "Friends"; break;
+                case 'L': result = "Love"; break;
+                case 'A': result = "Affection"; break;
+                case 'M': result = "Marriage"; break;
+                case 'E': result = "Enemies"; break;
+                case 'S': result = "Siblings"; break;
+            }
+
+            document.getElementById('circle').textContent = "Relationship: " + result;
+        }
+    </script>
+</body>
+
+</html>
